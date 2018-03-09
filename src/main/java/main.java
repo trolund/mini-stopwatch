@@ -1,18 +1,21 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class main {
+    private static JFrame frame;
     private JButton stopButton;
     private JButton startButton;
     private JButton resetButton;
     private JPanel jpanel;
     private JLabel timeLabel;
+    private JCheckBox alwaysOnTopCheckBox;
     private StopWatch stopWatch = new StopWatch();
 
-
     public static void main(String[] args) {
-        JFrame frame = new JFrame("The mini stopWatch! 2018");
+        frame = new JFrame("The mini stopWatch! 2018 V0.2");
         frame.setContentPane(new main().jpanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -43,7 +46,16 @@ public class main {
             public void actionPerformed(ActionEvent e) {
                 stopWatch.start();
                 timer.start();
-               // timeLabel.setText(stopWatch.toString());
+            }
+        });
+
+        alwaysOnTopCheckBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED) { //checkbox has been selected
+                    frame.setAlwaysOnTop(true);
+                } else {//checkbox has been deselected
+                    frame.setAlwaysOnTop(false);
+                };
             }
         });
     }
