@@ -1,8 +1,14 @@
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class main {
     private static JFrame frame;
@@ -12,6 +18,8 @@ public class main {
     private JPanel jpanel;
     private JLabel timeLabel;
     private JCheckBox alwaysOnTopCheckBox;
+    private JTextField textField1;
+    private JLabel status;
     private StopWatch stopWatch = new StopWatch();
 
     public static void main(String[] args) {
@@ -21,6 +29,8 @@ public class main {
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
+
+
     }
 
     public main() {
@@ -30,6 +40,8 @@ public class main {
                 timeLabel.setText(stopWatch.elapsedTime()+ "");
             }
         });
+
+        textField1.setText(timer.getDelay()+"");
 
         stopButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -56,6 +68,19 @@ public class main {
                 } else {//checkbox has been deselected
                     frame.setAlwaysOnTop(false);
                 };
+            }
+        });
+
+        textField1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+              try {
+                  if (textField1.getText() != "") {
+                      timer.setDelay(Integer.parseInt(textField1.getText()));
+                      status.setText("update frekvens is now: " + textField1.getText());
+                  }
+              }catch (NumberFormatException e1){
+                  status.setText("That is not an integer!");
+              }
             }
         });
     }
